@@ -75,5 +75,16 @@
     "imageUrl": "images/licks.jpg",
     "whatsappLink": "https://wa.me/233241234567?text=Hi!%20I'm%20interested%20in%20your%20Licks",
     "badgeColor": "bg-primary"
+  },
+  {
+    "id": "item-8",
+    "category": "services",
+    "campus": "ucc",
+    "title": "Sambridge laundry services",
+    "price": "GH₵ 40.00 - 100.00",
+    "description": "Professional laundry services with quick turnaround. Pickup and delivery available.",
+    "imageUrl": "images/sambridge.jpg",
+    "whatsappLink": "https://wa.me/233257954351",
+    "badgeColor": "bg-primary"
   }
 ]
