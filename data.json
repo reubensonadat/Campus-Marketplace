@@ -61,7 +61,7 @@
     "title": "Face mask",
     "price": "GH₵ 15.00",
     "description": "For your perfect skin glow. Comes in variety of flavours",
-    "imageUrl": "images/face mask.jpg",
+    "imageUrl": "images/face-mask.jpg",
     "whatsappLink": "https://wa.me/233241234567?text=Hi!%20I'm%20interested%20in%20your%20Face%20mask",
     "badgeColor": "bg-secondary"
   },
@@ -83,7 +83,7 @@
     "title": "Sambridge laundry services",
     "price": "GH₵ 40.00 - 100.00",
     "description": "Professional laundry services with quick turnaround. Pickup and delivery available.",
-    "imageUrl": "Sambridge.jpg",
+    "imageUrl": "images/Sambridge.jpg",
     "whatsappLink": "https://wa.me/233257954351",
     "badgeColor": "bg-primary"
   }
