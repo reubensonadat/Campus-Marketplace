@@ -1,3 +1,143 @@
+// Add this to the top of your script.js or inside the DOMContentLoaded event
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then(registration => {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(error => {
+                console.error('Service Worker registration failed:', error);
+            });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // DOM elements
+    const itemsContainer = document.getElementById('itemsContainer');
+    const categoryFilterButtons = document.querySelectorAll('.category-btn');
+    const campusFilterDropdown = document.getElementById('campusFilterDropdown');
+    const campusFilterOptions = document.querySelectorAll('#campusFilterOptions .dropdown-item');
+    const searchInput = document.getElementById('searchInput');
+    const noResultsMessage = document.getElementById('noResultsMessage');
+
+    // Global variables to hold data and current filters
+    let allItems = []; // This will store all items fetched from data.json
+    let currentCategoryFilter = 'all';
+    let currentCampusFilter = 'all';
+    let currentSearchTerm = '';
+
+    /**
+     * Fetches item data from data.json and initializes the display.
+     */
+    async function fetchItems() {
+        try {
+            const response = await fetch('data.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            allItems = await response.json();
+            console.log('Items loaded:', allItems); // For debugging
+            filterItems(); // Initial filtering to display all items
+        } catch (error) {
+            console.error('Could not fetch items:', error);
+            itemsContainer.innerHTML = '<p class=\"text-center text-danger\">Failed to load items. Please t...';
+        }
+    }
+
+    // ... (rest of your existing script.js code remains the same) ...
+
+    // Category filtering
+    categoryFilterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            categoryFilterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            currentCategoryFilter = this.getAttribute('data-filter');
+            filterItems();
+        });
+    });
+
+    // Campus filtering (using the dropdown items)
+    campusFilterOptions.forEach(option => {
+        option.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            campusFilterOptions.forEach(opt => opt.classList.remove('active'));
+            this.classList.add('active');
+
+            currentCampusFilter = this.getAttribute('data-filter');
+            const campusName = this.textContent;
+            campusFilterDropdown.innerHTML = `<i class=\"fas fa-map-marker-alt me-1\"></i> Campus: ${campusName}`;
+
+            filterItems();
+        });
+    });
+
+    // Search functionality
+    searchInput.addEventListener('input', function() {
+        currentSearchTerm = this.value.toLowerCase();
+        filterItems();
+    });
+    
+    // --- Initial setup and Navbar scroll effect ---
+
+    // Fetch items and display them on load
+    fetchItems();
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+            navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+        } else {
+            navbar.style.boxShadow = 'none';
+        }
+    });
+
+    // Function to filter and display items
+    function filterItems() {
+        let filteredItems = allItems.filter(item => {
+            const matchesCategory = currentCategoryFilter === 'all' || item.category === currentCategoryFilter;
+            const matchesCampus = currentCampusFilter === 'all' || item.campus === currentCampusFilter;
+            const matchesSearch = item.title.toLowerCase().includes(currentSearchTerm) ||
+                                  item.description.toLowerCase().includes(currentSearchTerm) ||
+                                  item.category.toLowerCase().includes(currentSearchTerm);
+            return matchesCategory && matchesCampus && matchesSearch;
+        });
+
+        displayItems(filteredItems);
+    }
+
+    // Function to display items
+    function displayItems(items) {
+        itemsContainer.innerHTML = ''; // Clear current items
+        if (items.length === 0) {
+            noResultsMessage.style.display = 'block';
+        } else {
+            noResultsMessage.style.display = 'none';
+            items.forEach(item => {
+                const itemCard = `
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <img src="${item.imageUrl}" class="card-img-top" alt="${item.title}" style="height: 200px; object-fit: cover;">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">${item.title}</h5>
+                                <p class="card-text text-muted">${item.description}</p>
+                                <div class="mt-auto">
+                                    <span class="badge ${item.badgeColor} mb-2">${item.campus.toUpperCase()}</span>
+                                    <p class="card-price fw-bold mb-2">${item.price}</p>
+                                    <a href="${item.whatsappLink}" class="btn btn-success btn-sm w-100">
+                                        <i class="fab fa-whatsapp me-1"></i> Contact Seller
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                itemsContainer.innerHTML += itemCard;
+            });
+        }
+    }
+});
 document.addEventListener('DOMContentLoaded', function() {
     // DOM elements
     const itemsContainer = document.getElementById('itemsContainer');
