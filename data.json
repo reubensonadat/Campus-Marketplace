@@ -1,0 +1,90 @@
+[
+  {
+    "id": "item-1",
+    "category": "books",
+    "campus": "ucc",
+    "title": "University Textbooks Bundle",
+    "price": "GH₵ 120.00",
+    "description": "Complete set of textbooks for Computer Science majors. Barely used, like new condition.",
+    "imageUrl": "images/Textbooks.jpg",
+    "whatsappLink": "https://wa.me/233241234567?text=Hi!%20I'm%20interested%20in%20your%20University%20Textbooks%20Bundle",
+    "badgeColor": "bg-primary"
+  },
+  {
+    "id": "item-2",
+    "category": "electronics",
+    "campus": "legon",
+    "title": "Dell Laptop - i5, 8GB RAM",
+    "price": "GH₵ 1,850.00",
+    "description": "Lightly used laptop perfect for students. Comes with charger and case.",
+    "imageUrl": "https://amso.eu/hpeciai/44cf28440070e210f3c1285fb935b634/eng_pl_Dell-Latitude-7400-i5-8365U-8GB-512GB-SSD-M-2-1920x1080-Klasa-A-Windows-11-Home-258822_1.jpg",
+    "whatsappLink": "https://wa.me/233241234567?text=Hi!%20I'm%20interested%20in%20your%20Dell%20Laptop",
+    "badgeColor": "bg-info"
+  },
+  {
+    "id": "item-3",
+    "category": "dorm",
+    "campus": "knust",
+    "title": "Mini Refrigerator",
+    "price": "GH₵ 280.00",
+    "description": "Compact fridge perfect for dorm rooms. Energy efficient and quiet operation.",
+    "imageUrl": "images/mini fridge.jpg",
+    "whatsappLink": "https://wa.me/233241234567?text=Hi!%20I'm%20interested%20in%20your%20Mini%20Refrigerator",
+    "badgeColor": "bg-warning"
+  },
+  {
+    "id": "item-4",
+    "category": "services",
+    "campus": "upsa",
+    "title": "Math & Physics Tutoring",
+    "price": "GH₵ 40/hr",
+    "description": "Experienced tutor offering help with calculus, algebra, and physics. Flexible hours.",
+    "imageUrl": "https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    "whatsappLink": "https://wa.me/233241234567?text=Hi!%20I'm%20interested%20in%20your%20Math%20%26%20Physics%20Tutoring",
+    "badgeColor": "bg-success"
+  },
+  {
+    "id": "item-5",
+    "category": "clothing",
+    "campus": "gimpa",
+    "title": "Designer Jeans & Jackets",
+    "price": "GH₵ 60.00 - 120.00",
+    "description": "Brand name clothing in excellent condition. Various sizes available.",
+    "imageUrl": "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    "whatsappLink": "https://wa.me/233241234567?text=Hi!%20I'm%20interested%20in%20your%20Designer%20Clothing",
+    "badgeColor": "bg-danger"
+  },
+  {
+    "id": "item-6",
+    "category": "health-and-beauty",
+    "campus": "legon",
+    "title": "Face mask",
+    "price": "GH₵ 15.00",
+    "description": "For your perfect skin glow. Comes in variety of flavours",
+    "imageUrl": "images/face_mask.jpg",
+    "whatsappLink": "https://wa.me/233241234567?text=Hi!%20I'm%20interested%20in%20your%20Face%20mask",
+    "badgeColor": "bg-secondary"
+  },
+  {
+    "id": "item-7",
+    "category": "food",
+    "campus": "ucc",
+    "title": "Licks",
+    "price": "GH₵ 25.00 - 60.00",
+    "description": "Taste delight at the campus delight food service",
+    "imageUrl": "images/licks.jpg",
+    "whatsappLink": "https://wa.me/233241234567?text=Hi!%20I'm%20interested%20in%20your%20Licks",
+    "badgeColor": "bg-primary"
+  },
+  {
+    "id": "item-8",
+    "category": "services",
+    "campus": "ucc",
+    "title": "Sambridge laundry services",
+    "price": "GH₵ 40.00 - 100.00",
+    "description": "Professional laundry services with quick turnaround. Pickup and delivery available.",
+    "imageUrl": "images/sambridge.jpg",
+    "whatsappLink": "https://wa.me/233257954351",
+    "badgeColor": "bg-primary"
+  }  
+]

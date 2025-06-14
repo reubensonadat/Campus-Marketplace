@@ -1,0 +1,21 @@
+{
+  "name": "Campus Marketplace",
+  "short_name": "Marketplace",
+  "description": "Find everything you need on and around campus at the tap of a button",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#e4edf5",
+  "theme_color": "#4361ee",
+  "icons": [
+    {
+      "src": "images\loading.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images\loading.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
