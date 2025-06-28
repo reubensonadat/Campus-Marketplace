@@ -16,15 +16,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // DOM elements
     const itemsContainer = document.getElementById('itemsContainer');
     const categoryFilterButtons = document.querySelectorAll('.category-btn');
-    const campusFilterDropdown = document.getElementById('campusFilterDropdown');
-    const campusFilterOptions = document.querySelectorAll('#campusFilterOptions .dropdown-item');
+    // Removed campusFilterDropdown and campusFilterOptions as they are no longer needed
     const searchInput = document.getElementById('searchInput');
     const noResultsMessage = document.getElementById('noResultsMessage');
 
     // Global variables to hold data and current filters
     let allItems = []; // This will store all items fetched from data.json
     let currentCategoryFilter = 'all';
-    let currentCampusFilter = 'all';
+    // Removed currentCampusFilter
     let currentSearchTerm = '';
 
     /**
@@ -34,133 +33,8 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const response = await fetch('data.json');
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            allItems = await response.json();
-            console.log('Items loaded:', allItems); // For debugging
-            filterItems(); // Initial filtering to display all items
-        } catch (error) {
-            console.error('Could not fetch items:', error);
-            itemsContainer.innerHTML = '<p class=\"text-center text-danger\">Failed to load items. Please t...';
-        }
-    }
-
-    // ... (rest of your existing script.js code remains the same) ...
-
-    // Category filtering
-    categoryFilterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            categoryFilterButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-            currentCategoryFilter = this.getAttribute('data-filter');
-            filterItems();
-        });
-    });
-
-    // Campus filtering (using the dropdown items)
-    campusFilterOptions.forEach(option => {
-        option.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            campusFilterOptions.forEach(opt => opt.classList.remove('active'));
-            this.classList.add('active');
-
-            currentCampusFilter = this.getAttribute('data-filter');
-            const campusName = this.textContent;
-            campusFilterDropdown.innerHTML = `<i class=\"fas fa-map-marker-alt me-1\"></i> Campus: ${campusName}`;
-
-            filterItems();
-        });
-    });
-
-    // Search functionality
-    searchInput.addEventListener('input', function() {
-        currentSearchTerm = this.value.toLowerCase();
-        filterItems();
-    });
-    
-    // --- Initial setup and Navbar scroll effect ---
-
-    // Fetch items and display them on load
-    fetchItems();
-
-    // Navbar scroll effect
-    window.addEventListener('scroll', function() {
-        const navbar = document.querySelector('.navbar');
-        if (window.scrollY > 50) {
-            navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-        } else {
-            navbar.style.boxShadow = 'none';
-        }
-    });
-
-    // Function to filter and display items
-    function filterItems() {
-        let filteredItems = allItems.filter(item => {
-            const matchesCategory = currentCategoryFilter === 'all' || item.category === currentCategoryFilter;
-            const matchesCampus = currentCampusFilter === 'all' || item.campus === currentCampusFilter;
-            const matchesSearch = item.title.toLowerCase().includes(currentSearchTerm) ||
-                                  item.description.toLowerCase().includes(currentSearchTerm) ||
-                                  item.category.toLowerCase().includes(currentSearchTerm);
-            return matchesCategory && matchesCampus && matchesSearch;
-        });
-
-        displayItems(filteredItems);
-    }
-
-    // Function to display items
-    function displayItems(items) {
-        itemsContainer.innerHTML = ''; // Clear current items
-        if (items.length === 0) {
-            noResultsMessage.style.display = 'block';
-        } else {
-            noResultsMessage.style.display = 'none';
-            items.forEach(item => {
-                const itemCard = `
-                    <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card h-100 shadow-sm">
-                            <img src="${item.imageUrl}" class="card-img-top" alt="${item.title}" style="height: 200px; object-fit: cover;">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title">${item.title}</h5>
-                                <p class="card-text text-muted">${item.description}</p>
-                                <div class="mt-auto">
-                                    <span class="badge ${item.badgeColor} mb-2">${item.campus.toUpperCase()}</span>
-                                    <p class="card-price fw-bold mb-2">${item.price}</p>
-                                    <a href="${item.whatsappLink}" class="btn btn-success btn-sm w-100">
-                                        <i class="fab fa-whatsapp me-1"></i> Contact Seller
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                itemsContainer.innerHTML += itemCard;
-            });
-        }
-    }
-});
-document.addEventListener('DOMContentLoaded', function() {
-    // DOM elements
-    const itemsContainer = document.getElementById('itemsContainer');
-    const categoryFilterButtons = document.querySelectorAll('.category-btn');
-    const campusFilterDropdown = document.getElementById('campusFilterDropdown');
-    const campusFilterOptions = document.querySelectorAll('#campusFilterOptions .dropdown-item');
-    const searchInput = document.getElementById('searchInput');
-    const noResultsMessage = document.getElementById('noResultsMessage');
-
-    // Global variables to hold data and current filters
-    let allItems = []; // This will store all items fetched from data.json
-    let currentCategoryFilter = 'all';
-    let currentCampusFilter = 'all';
-    let currentSearchTerm = '';
-
-    /**
-     * Fetches item data from data.json and initializes the display.
-     */
-    async function fetchItems() {
-        try {
-            const response = await fetch('data.json');
-            if (!response.ok) {
+                // Log the HTTP status for better debugging
+                console.error(`HTTP error! Status: ${response.status} - Could not fetch data.json`);
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             allItems = await response.json();
@@ -180,13 +54,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function createItemCard(item) {
         // Ensure image URL has a fallback to a placeholder if empty
         const imageUrl = item.imageUrl || `https://placehold.co/400x200/cccccc/333333?text=${encodeURIComponent(item.title)}`;
-        const campusName = item.campus.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-        const categoryName = item.category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+        // Removed campusName variable and related badge
+        const categoryName = item.category ? item.category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : 'N/A'; // Handle missing category
 
         return `
-            <div class="col-lg-4 col-md-6" data-category="${item.category}" data-campus="${item.campus}" data-item-id="${item.id}">
+            <div class="col-lg-4 col-md-6" data-category="${item.category || 'unknown'}" data-item-id="${item.id}">
                 <div class="card h-100 shadow-sm">
-                    <span class="badge bg-primary campus-badge">${campusName}</span>
                     <span class="badge ${item.badgeColor || 'bg-info'} item-badge">${categoryName}</span>
                     <img src="${imageUrl}" class="card-img-top" alt="${item.title}" onerror="this.onerror=null;this.src='https://placehold.co/400x200/cccccc/333333?text=No+Image';">
                     <div class="card-body">
@@ -225,16 +98,16 @@ document.addEventListener('DOMContentLoaded', function() {
      */
     function filterItems() {
         const filtered = allItems.filter(item => {
-            const itemCategory = item.category.toLowerCase();
-            const itemCampus = item.campus.toLowerCase();
-            const itemTitle = item.title.toLowerCase();
-            const itemDescription = item.description.toLowerCase();
+            const itemCategory = (item.category || '').toLowerCase(); // Handle undefined category
+            // Removed itemCampus variable
+            const itemTitle = (item.title || '').toLowerCase(); // Handle undefined title
+            const itemDescription = (item.description || '').toLowerCase(); // Handle undefined description
 
             const matchesCategory = (currentCategoryFilter === 'all' || itemCategory === currentCategoryFilter);
-            const matchesCampus = (currentCampusFilter === 'all' || itemCampus === currentCampusFilter);
+            // Removed matchesCampus condition
             const matchesSearch = (itemTitle.includes(currentSearchTerm) || itemDescription.includes(currentSearchTerm));
 
-            return matchesCategory && matchesCampus && matchesSearch;
+            return matchesCategory && matchesSearch; // Updated return condition
         });
 
         displayItems(filtered);
@@ -245,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
      */
     window.resetFilters = function() {
         currentCategoryFilter = 'all';
-        currentCampusFilter = 'all';
+        // Removed currentCampusFilter reset
         currentSearchTerm = '';
 
         // Reset category buttons UI
@@ -256,14 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Reset campus dropdown UI
-        campusFilterOptions.forEach(opt => {
-            opt.classList.remove('active');
-            if (opt.getAttribute('data-filter') === 'all') {
-                opt.classList.add('active');
-            }
-        });
-        campusFilterDropdown.innerHTML = `<i class="fas fa-map-marker-alt me-1"></i> Campus: All Campuses`;
+        // Removed campus dropdown UI reset
 
         // Clear search input
         searchInput.value = '';
@@ -284,21 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Campus filtering (using the dropdown items)
-    campusFilterOptions.forEach(option => {
-        option.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            campusFilterOptions.forEach(opt => opt.classList.remove('active'));
-            this.classList.add('active');
-
-            currentCampusFilter = this.getAttribute('data-filter');
-            const campusName = this.textContent;
-            campusFilterDropdown.innerHTML = `<i class="fas fa-map-marker-alt me-1"></i> Campus: ${campusName}`;
-
-            filterItems();
-        });
-    });
+    // Removed Campus filtering event listener
 
     // Search functionality
     searchInput.addEventListener('input', function() {
