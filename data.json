@@ -2,7 +2,6 @@
   {
     "id": "item-1",
     "category": "books",
-    "campus": "ucc",
     "title": "University Textbooks Bundle",
     "price": "GH₵ 120.00",
     "description": "Complete set of textbooks for Computer Science majors. Barely used, like new condition.",
@@ -13,7 +12,6 @@
   {
     "id": "item-2",
     "category": "electronics",
-    "campus": "legon",
     "title": "Dell Laptop - i5, 8GB RAM",
     "price": "GH₵ 1,850.00",
     "description": "Lightly used laptop perfect for students. Comes with charger and case.",
@@ -24,7 +22,6 @@
   {
     "id": "item-3",
     "category": "dorm",
-    "campus": "knust",
     "title": "Mini Refrigerator",
     "price": "GH₵ 280.00",
     "description": "Compact fridge perfect for dorm rooms. Energy efficient and quiet operation.",
@@ -35,7 +32,6 @@
   {
     "id": "item-4",
     "category": "services",
-    "campus": "upsa",
     "title": "Math & Physics Tutoring",
     "price": "GH₵ 40/hr",
     "description": "Experienced tutor offering help with calculus, algebra, and physics. Flexible hours.",
@@ -46,7 +42,6 @@
   {
     "id": "item-5",
     "category": "clothing",
-    "campus": "gimpa",
     "title": "Designer Jeans & Jackets",
     "price": "GH₵ 60.00 - 120.00",
     "description": "Brand name clothing in excellent condition. Various sizes available.",
@@ -57,7 +52,6 @@
   {
     "id": "item-6",
     "category": "health-and-beauty",
-    "campus": "legon",
     "title": "Face mask",
     "price": "GH₵ 15.00",
     "description": "For your perfect skin glow. Comes in variety of flavours",
@@ -68,7 +62,6 @@
   {
     "id": "item-7",
     "category": "food",
-    "campus": "ucc",
     "title": "Licks",
     "price": "GH₵ 25.00 - 60.00",
     "description": "Taste delight at the campus delight food service",
@@ -79,7 +72,6 @@
   {
     "id": "item-8",
     "category": "services",
-    "campus": "ucc",
     "title": "Sambridge laundry services",
     "price": "GH₵ 40.00 - 100.00",
     "description": "Professional laundry services with quick turnaround. Pickup and delivery available.",
