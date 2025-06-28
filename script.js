@@ -1,4 +1,5 @@
 // Add this to the top of your script.js or inside the DOMContentLoaded event
+//to make the thing downloadable
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/service-worker.js')
