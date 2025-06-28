@@ -13,23 +13,28 @@ if ('serviceWorker' in navigator) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // DOM elements
+    // DOM elements - only get elements that might exist on the current page
     const itemsContainer = document.getElementById('itemsContainer');
     const categoryFilterButtons = document.querySelectorAll('.category-btn');
-    // Removed campusFilterDropdown and campusFilterOptions as they are no longer needed
     const searchInput = document.getElementById('searchInput');
     const noResultsMessage = document.getElementById('noResultsMessage');
 
     // Global variables to hold data and current filters
     let allItems = []; // This will store all items fetched from data.json
     let currentCategoryFilter = 'all';
-    // Removed currentCampusFilter
     let currentSearchTerm = '';
 
     /**
      * Fetches item data from data.json and initializes the display.
+     * This function will only display items if the 'itemsContainer' element exists,
+     * ensuring it only runs on the categories.html page.
      */
     async function fetchItems() {
+        if (!itemsContainer) {
+            // If itemsContainer doesn't exist, we are not on the categories page, so do nothing.
+            return;
+        }
+
         try {
             const response = await fetch('data.json');
             if (!response.ok) {
@@ -42,7 +47,9 @@ document.addEventListener('DOMContentLoaded', function() {
             filterItems(); // Initial filtering to display all items
         } catch (error) {
             console.error('Could not fetch items:', error);
-            itemsContainer.innerHTML = '<p class="text-center text-danger">Failed to load items. Please try again later.</p>';
+            if (itemsContainer) {
+                itemsContainer.innerHTML = '<p class="text-center text-danger">Failed to load items. Please try again later.</p>';
+            }
         }
     }
 
@@ -54,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function createItemCard(item) {
         // Ensure image URL has a fallback to a placeholder if empty
         const imageUrl = item.imageUrl || `https://placehold.co/400x200/cccccc/333333?text=${encodeURIComponent(item.title)}`;
-        // Removed campusName variable and related badge
         const categoryName = item.category ? item.category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : 'N/A'; // Handle missing category
 
         return `
@@ -81,12 +87,14 @@ document.addEventListener('DOMContentLoaded', function() {
      * @param {Array<object>} itemsToDisplay - The array of item objects to render.
      */
     function displayItems(itemsToDisplay) {
+        if (!itemsContainer) return; // Prevent error if not on categories page
+
         itemsContainer.innerHTML = ''; // Clear existing items
 
         if (itemsToDisplay.length === 0) {
-            noResultsMessage.style.display = 'block';
+            if (noResultsMessage) noResultsMessage.style.display = 'block';
         } else {
-            noResultsMessage.style.display = 'none';
+            if (noResultsMessage) noResultsMessage.style.display = 'none';
             itemsToDisplay.forEach(item => {
                 itemsContainer.insertAdjacentHTML('beforeend', createItemCard(item));
             });
@@ -99,15 +107,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function filterItems() {
         const filtered = allItems.filter(item => {
             const itemCategory = (item.category || '').toLowerCase(); // Handle undefined category
-            // Removed itemCampus variable
             const itemTitle = (item.title || '').toLowerCase(); // Handle undefined title
             const itemDescription = (item.description || '').toLowerCase(); // Handle undefined description
 
             const matchesCategory = (currentCategoryFilter === 'all' || itemCategory === currentCategoryFilter);
-            // Removed matchesCampus condition
             const matchesSearch = (itemTitle.includes(currentSearchTerm) || itemDescription.includes(currentSearchTerm));
 
-            return matchesCategory && matchesSearch; // Updated return condition
+            return matchesCategory && matchesSearch;
         });
 
         displayItems(filtered);
@@ -118,58 +124,61 @@ document.addEventListener('DOMContentLoaded', function() {
      */
     window.resetFilters = function() {
         currentCategoryFilter = 'all';
-        // Removed currentCampusFilter reset
         currentSearchTerm = '';
 
         // Reset category buttons UI
-        categoryFilterButtons.forEach(btn => {
-            btn.classList.remove('active');
-            if (btn.getAttribute('data-filter') === 'all') {
-                btn.classList.add('active');
-            }
-        });
-
-        // Removed campus dropdown UI reset
+        if (categoryFilterButtons) {
+            categoryFilterButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-filter') === 'all') {
+                    btn.classList.add('active');
+                }
+            });
+        }
 
         // Clear search input
-        searchInput.value = '';
+        if (searchInput) {
+            searchInput.value = '';
+        }
 
         filterItems(); // Re-apply all filters
     };
 
 
     // --- Event Listeners for Filters ---
-
-    // Category filtering
-    categoryFilterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            categoryFilterButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-            currentCategoryFilter = this.getAttribute('data-filter');
-            filterItems();
+    if (categoryFilterButtons) {
+        categoryFilterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                categoryFilterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                currentCategoryFilter = this.getAttribute('data-filter');
+                filterItems();
+            });
         });
-    });
-
-    // Removed Campus filtering event listener
+    }
 
     // Search functionality
-    searchInput.addEventListener('input', function() {
-        currentSearchTerm = this.value.toLowerCase();
-        filterItems();
-    });
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            currentSearchTerm = this.value.toLowerCase();
+            filterItems();
+        });
+    }
     
     // --- Initial setup and Navbar scroll effect ---
 
-    // Fetch items and display them on load
+    // Fetch items and display them on load (only runs if itemsContainer exists)
     fetchItems();
 
-    // Navbar scroll effect
+    // Navbar scroll effect (applies to all pages)
     window.addEventListener('scroll', function() {
         const navbar = document.querySelector('.navbar');
-        if (window.scrollY > 50) {
-            navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-        } else {
-            navbar.style.boxShadow = 'none';
+        if (navbar) { // Check if navbar exists on the page
+            if (window.scrollY > 50) {
+                navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            } else {
+                navbar.style.boxShadow = 'none';
+            }
         }
     });
 });
